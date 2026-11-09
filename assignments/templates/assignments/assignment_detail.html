@@ -1,4 +1,5 @@
 {% extends "assignments/base.html" %}
+{% load jalali_tags tz %}
 
 {% block content %}
     <h2>عنوان تکلیف: {{ assignment.title }}</h2>
@@ -9,15 +10,28 @@
         {{ assignment.description|linebreaks }}
     </div>
     
-    <p><strong>زمان ثبت:</strong> {{ assignment.created_at|date:"Y/m/d H:i" }}</p>
-    <p><strong>مهلت تحویل:</strong> {{ assignment.deadline|date:"Y/m/d H:i" }}</p>
+    <p>
+        <strong>زمان ثبت:</strong>
+        <bdi dir="ltr">{{ assignment.created_at|localtime|to_jalali:"%Y/%m/%d - %H:%M" }}</bdi>
+    </p>
+
+    <p>
+        <strong>مهلت تحویل:</strong>
+        <bdi dir="ltr">{{ assignment.deadline|localtime|to_jalali:"%Y/%m/%d - %H:%M" }}</bdi>
+    </p>
+
     
     <p>
-        <strong>وضعیت:</strong> 
+        <strong>وضعیت:</strong>
         {% if is_expired %}
-            <span class="status-expired">دارای مهلت (همچنان برای تحویل فرصت دارید)</span>
+            <span class="status-expired">
+                مهلت گذشته (مهلت تحویل به پایان رسیده است)
+            </span>
         {% else %}
-            <span class="status-expired">مهلت گذشته (مهلت تحویل به پایان رسیده است)</span>
+            <span class="status-ok">
+                دارای مهلت (همچنان برای تحویل فرصت دارید)
+            </span>
         {% endif %}
     </p>
+
 {% endblock %}

@@ -2,6 +2,7 @@ from django.contrib import admin
 from jalali_date.admin import ModelAdminJalaliMixin
 from jalali_date import datetime2jalali
 from .models import Course, Assignment
+from django.utils import timezone
 
 #register
 class CourseAdmin(admin.ModelAdmin):
@@ -19,16 +20,15 @@ class AssignmentAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
     @admin.display(description='مهلت تحویل (شمسی)')
     def get_deadline_jalali(self, obj):
         if obj.deadline:
-            return datetime2jalali(obj.deadline).strftime('%Y/%m/%d - %H:%M')
+            return datetime2jalali(timezone.localtime(obj.deadline)).strftime('%Y/%m/%d - %H:%M')
         return '-'
 
     # نمایش تاریخ ثبت به صورت شمسی در لیست
     @admin.display(description='تاریخ ثبت (شمسی)')
     def get_created_at_jalali(self, obj):
         if obj.created_at:
-            return datetime2jalali(obj.created_at).strftime('%Y/%m/%d - %H:%M')
+            return datetime2jalali(timezone.localtime(obj.created_at)).strftime('%Y/%m/%d - %H:%M')
         return '-'
-
 
 admin.site.register(Course, CourseAdmin)
 admin.site.register(Assignment, AssignmentAdmin)

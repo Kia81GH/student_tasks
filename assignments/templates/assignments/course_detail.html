@@ -1,4 +1,6 @@
 {% extends "assignments/base.html" %}
+{% load jalali_tags tz %}
+
 
 {% block content %}
     <h2>درس: {{ course.title }}</h2>
@@ -12,7 +14,9 @@
             {% for assignment in assignments %}
                 <li>
                     <a href="{% url 'assignment_detail' assignment.id %}">{{ assignment.title }}</a>
-                    - مهلت: {{ assignment.deadline|date:"Y/m/d H:i" }}
+                    - مهلت:
+                    <bdi dir="ltr">{{ assignment.deadline|localtime|to_jalali:"%Y/%m/%d - %H:%M" }}</bdi>
+
                     
                     {% if assignment.deadline >= now %}
                         <span class="status-ok">[دارای مهلت]</span>
