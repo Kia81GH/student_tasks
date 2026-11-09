@@ -1,0 +1,23 @@
+{% extends "assignments/base.html" %}
+
+{% block content %}
+    <h2>عنوان تکلیف: {{ assignment.title }}</h2>
+    <p><strong>مربوط به درس:</strong> <a href="{% url 'course_detail' assignment.course.id %}">{{ assignment.course.title }}</a></p>
+    
+    <div style="background-color: #f9f9f9; padding: 15px; border-right: 4px solid #007bff; margin: 20px 0;">
+        <strong>شرح تکلیف:</strong><br>
+        {{ assignment.description|linebreaks }}
+    </div>
+    
+    <p><strong>زمان ثبت:</strong> {{ assignment.created_at|date:"Y/m/d H:i" }}</p>
+    <p><strong>مهلت تحویل:</strong> {{ assignment.deadline|date:"Y/m/d H:i" }}</p>
+    
+    <p>
+        <strong>وضعیت:</strong> 
+        {% if is_expired %}
+            <span class="status-expired">دارای مهلت (همچنان برای تحویل فرصت دارید)</span>
+        {% else %}
+            <span class="status-expired">مهلت گذشته (مهلت تحویل به پایان رسیده است)</span>
+        {% endif %}
+    </p>
+{% endblock %}

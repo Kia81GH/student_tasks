@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>سامانه مدیریت تکالیف</title>
+    <style>
+        :root {
+            --bg: #0b1120;
+            --glass: rgba(255, 255, 255, 0.07);
+            --glass-strong: rgba(255, 255, 255, 0.13);
+            --stroke: rgba(255, 255, 255, 0.14);
+            --stroke-soft: rgba(255, 255, 255, 0.09);
+            --text: #cbd5e1;
+            --heading: #f8fafc;
+            --primary: #60a5fa;
+            --primary-hover: #bfdbfe;
+            --ok: #4ade80;
+            --expired: #fca5a5;
+            --radius: 22px;
+            --blur: 18px;
+            --shadow-md: 0 26px 70px -30px rgba(0, 0, 0, 0.9);
+            --glow: 0 10px 30px -12px rgba(59, 130, 246, 0.75);
+            color-scheme: dark;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: "Vazirmatn", "IRANSans", "Segoe UI", Tahoma, Arial, sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            min-height: 100vh;
+            background-color: var(--bg);
+            background-image:
+                radial-gradient(900px 620px at 88% -12%, rgba(56, 189, 248, 0.24), transparent 62%),
+                radial-gradient(760px 540px at 4% 2%, rgba(129, 140, 248, 0.22), transparent 58%),
+                radial-gradient(820px 700px at 50% 112%, rgba(16, 185, 129, 0.16), transparent 62%),
+                linear-gradient(180deg, #0b1120 0%, #111c33 55%, #0b1120 100%);
+            background-attachment: fixed;
+            color: var(--text);
+            font-size: 15px;
+            line-height: 1.85;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+
+        ::selection { background: rgba(59, 130, 246, 0.38); color: #f8fafc; }
+
+        header { max-width: 900px; margin: 0 auto 22px; }
+
+        header h1 {
+            margin: 0;
+            font-size: clamp(1.4rem, 1.1rem + 1.2vw, 1.95rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: var(--heading);
+            text-shadow: 0 2px 24px rgba(11, 17, 32, 0.6);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 32px 34px;
+            background: linear-gradient(155deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.04) 45%, rgba(255, 255, 255, 0.07) 100%);
+            border: 1px solid var(--stroke);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+            -webkit-backdrop-filter: blur(var(--blur)) saturate(160%);
+            backdrop-filter: blur(var(--blur)) saturate(160%);
+        }
+
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 26px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--stroke-soft);
+        }
+
+        nav a {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            border: 1px solid var(--stroke-soft);
+            border-radius: 999px;
+            background: var(--glass);
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        nav a:hover {
+            background: rgba(59, 130, 246, 0.9);
+            border-color: rgba(191, 219, 254, 0.6);
+            color: #f8fafc;
+            box-shadow: var(--glow);
+        }
+
+        h2, h3 { color: var(--heading); letter-spacing: -0.01em; }
+
+        h2 {
+            margin: 0 0 20px;
+            padding-bottom: 12px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            border-bottom: 1px solid var(--stroke-soft);
+        }
+
+        h3 { margin: 26px 0 14px; font-size: 1.08rem; font-weight: 700; }
+
+        p { margin: 0 0 14px; color: var(--text); }
+
+        a {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: var(--primary-hover);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        a:focus-visible {
+            outline: 3px solid rgba(96, 165, 250, 0.55);
+            outline-offset: 2px;
+            border-radius: 6px;
+        }
+
+        ul {
+            display: grid;
+            gap: 12px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        li {
+            padding: 14px 18px;
+            background: linear-gradient(150deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+            border: 1px solid var(--stroke-soft);
+            border-inline-start: 3px solid rgba(96, 165, 250, 0.55);
+            border-radius: 14px;
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+
+        li:hover {
+            background: var(--glass-strong);
+            border-inline-start-color: var(--primary);
+        }
+
+        hr {
+            height: 1px;
+            margin: 24px 0;
+            border: 0;
+            background: var(--stroke-soft);
+        }
+
+        strong { color: var(--heading); font-weight: 700; }
+
+        div[style] {
+            background-color: rgba(255, 255, 255, 0.055) !important;
+            border-radius: 14px;
+        }
+
+        .status-ok { color: var(--ok); font-weight: 700; }
+        .status-expired { color: var(--expired); font-weight: 700; }
+
+        @media (max-width: 640px) {
+            body { padding: 24px 14px; }
+            .container { padding: 22px 18px; border-radius: 18px; }
+            nav a { padding: 7px 13px; }
+            li { padding: 12px 14px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            nav a, a, li { transition: none; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+    <h1>سامانه مدیریت تکالیف دانشجویان</h1>
+    </header>
+    <div class="container">
+        <!-- منوی مشترک بین تمام صفحات -->
+        <nav>
+            <a href="{% url 'assignment_list' %}">همه تکالیف</a>
+            <a href="{% url 'course_list' %}">فهرست درس‌ها</a>
+        </nav>
+
+        <!-- محتوای متغیر هر صفحه اینجا قرار می‌گیرد -->
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{% extends "assignments/base.html" %}
+
+{% block content %}
+    <h2>درس: {{ course.title }}</h2>
+    <p><strong>کد درس:</strong> {{ course.code }} | <strong>استاد:</strong> {{ course.teacher }}</p>
+    
+    <hr>
+    <h3>تکالیف این درس:</h3>
+    
+    {% if assignments %}
+        <ul>
+            {% for assignment in assignments %}
+                <li>
+                    <a href="{% url 'assignment_detail' assignment.id %}">{{ assignment.title }}</a>
+                    - مهلت: {{ assignment.deadline|date:"Y/m/d H:i" }}
+                    
+                    {% if assignment.deadline >= now %}
+                        <span class="status-ok">[دارای مهلت]</span>
+                    {% else %}
+                        <span class="status-expired">[مهلت گذشته]</span>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>تکلیفی برای این درس ثبت نشده است.</p>
+    {% endif %}
+{% endblock %}
